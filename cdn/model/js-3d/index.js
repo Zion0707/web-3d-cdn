@@ -1,5 +1,7 @@
 const js3dModelCdnUrl = '/cdn/model/js-3d/';
 const js3dModelImg01 = js3dModelCdnUrl + 'images/01.png';
+const js3dModelImgPkq = js3dModelCdnUrl + 'images/pkq.jpg';
+const js3dModelObjPkq = js3dModelCdnUrl + 'obj/pkq.obj';
 
 const js3dModel = {
     // 图片列表
@@ -24,7 +26,7 @@ const js3dModel = {
 
     //模型加载
     modelLoad: function (props) {
-        const { THREE, TWEEN, OrbitControls } = props;
+        const { THREE, TWEEN, OrbitControls, OBJLoader } = props;
         const el = document.getElementById('content');
         const winWidth = window.innerWidth;
         const winHeight = window.innerHeight;
@@ -81,6 +83,27 @@ const js3dModel = {
         whiteMesh.name = '白色立方体';
         scene.add(whiteMesh);
 
+        // 导入obj模型
+        const objLoader = new OBJLoader();
+        objLoader.load(js3dModelObjPkq, (object) => {
+            // 设置模型缩放比例
+            object.scale.set(1, 1, 1);
+            // 设置模型的坐标
+            object.position.set(0, 10, 0);
+
+            object.traverse((child) => {
+                if (child.isMesh) {
+                    // console.log(child.material);
+                    // 设置模型皮肤
+                    child.material.map = new THREE.TextureLoader().load(js3dModelImgPkq);
+                    child.material.name = '皮卡丘';
+                }
+            });
+
+            // 将模型添加到场景中
+            scene.add(object);
+        });
+
         // ------------------------------------------- 3d模型搭建 end---------------------------------------------
 
         // 元素点击事件
@@ -91,12 +114,14 @@ const js3dModel = {
             mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
             mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
             raycaster.setFromCamera(mouse, camera);
-            const intersects = raycaster.intersectObjects(scene.children);
+            const intersects = raycaster.intersectObjects(scene.children, true);
             console.log(intersects);
             if (intersects.length > 0) {
                 intersects.forEach((item) => {
                     if (item.object.name === '白色立方体') {
                         window.ddddd(item.object.name);
+                    } else if (item.object.material.name === '皮卡丘') {
+                        window.ddddd(item.object.material.name);
                     }
                 });
             }
