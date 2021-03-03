@@ -1,0 +1,13 @@
+{
+    "name": "web-3d-cdn",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "author": "Zion0707 <346445684@qq.com>",
+    "license": "MIT",
+    "devDependencies": {
+        "babel-cli": "^6.26.0",
+        "babel-preset-es2015": "^6.24.1",
+        "babel-preset-stage-2": "^6.24.1"
+    }
+}
