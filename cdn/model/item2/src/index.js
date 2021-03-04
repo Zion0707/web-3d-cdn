@@ -95,7 +95,7 @@ const modelLoad = async function () {
         if (intersects.length > 0) {
             intersects.forEach((item) => {
                 if (item.object.name === '白色立方体') {
-                    window.ddddd(item.object.name);
+                    window.model3dEvent(item.object.name);
                 }
             });
         }

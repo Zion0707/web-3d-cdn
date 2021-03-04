@@ -121,9 +121,9 @@ const modelLoad = async function () {
         if (intersects.length > 0) {
             intersects.forEach((item) => {
                 if (item.object.name === '白色立方体') {
-                    window.ddddd(item.object.name);
+                    window.model3dEvent(item.object.name);
                 } else if (item.object.material.name === '皮卡丘') {
-                    window.ddddd(item.object.material.name);
+                    window.model3dEvent(item.object.material.name);
                 }
             });
         }
@@ -168,6 +168,7 @@ const modelLoad = async function () {
 const init = async function () {
     await imgLoad();
     modelLoad();
+    window.model3dLoad();
 };
 
 init();
