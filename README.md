@@ -6,10 +6,12 @@
 
 ```
 
-进入指定的项目执行
+进入指定的项目目录执行
 
 1、yarn install
 
-2、yarn watch
+2、yarn dev
+
+3、yarn dev
 
 ```
