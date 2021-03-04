@@ -10,8 +10,6 @@ const imgPkq = cdnUrl + 'images/pkq.jpg';
 const objPkq = cdnUrl + 'models/pkq.obj';
 const imgsArr = [img01, imgPkq, objPkq];
 
-console.log(loadImages);
-
 //模型加载
 const modelLoad = async () => {
     const el = document.getElementById('content');

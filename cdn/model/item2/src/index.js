@@ -1,30 +1,17 @@
 import * as THREE from 'three';
 import TWEEN from '@tweenjs/tween.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
+import { loadImages } from '../../utils/index.js';
 
 const cdnUrl = '/cdn/model/item2/src/';
 const img01 = cdnUrl + 'images/01.png';
-const imgsArr = [img01];
-
-// 图片加载
-const imgLoad = async function () {
-    const pArr = [];
-    imgsArr.forEach((item) => {
-        const p = new Promise((reslove) => {
-            const img = new Image();
-            img.src = item;
-            img.onload = () => {
-                reslove(img);
-            };
-        });
-        pArr.push(p);
-    });
-    const res = await Promise.all(pArr);
-    return res;
-};
+const imgPkq = cdnUrl + 'images/pkq.jpg';
+const objPkq = cdnUrl + 'models/pkq.obj';
+const imgsArr = [img01, imgPkq, objPkq];
 
 //模型加载
-const modelLoad = async function () {
+const modelLoad = async () => {
     const el = document.getElementById('content');
     const winWidth = window.innerWidth;
     const winHeight = window.innerHeight;
@@ -80,6 +67,28 @@ const modelLoad = async function () {
     const whiteMesh = new THREE.Mesh(whiteBoxGeometry, bodyPositiveMaterial);
     whiteMesh.name = '白色立方体';
     scene.add(whiteMesh);
+
+    // 导入obj模型
+    const objLoader = new OBJLoader();
+    objLoader.load(objPkq, (object) => {
+        // 设置模型缩放比例
+        object.scale.set(1, 1, 1);
+        // 设置模型的坐标
+        object.position.set(0, 10, 0);
+
+        object.traverse((child) => {
+            if (child.isMesh) {
+                // console.log(child.material);
+                // 设置模型皮肤
+                child.material.map = new THREE.TextureLoader().load(imgPkq);
+                child.material.name = '皮卡丘';
+            }
+        });
+
+        // 将模型添加到场景中
+        scene.add(object);
+    });
+
     // ------------------------------------------- 3d模型搭建 end---------------------------------------------
 
     // 元素点击事件
@@ -96,6 +105,8 @@ const modelLoad = async function () {
             intersects.forEach((item) => {
                 if (item.object.name === '白色立方体') {
                     window.model3dEvent(item.object.name);
+                } else if (item.object.material.name === '皮卡丘') {
+                    window.model3dEvent(item.object.material.name);
                 }
             });
         }
@@ -136,10 +147,13 @@ const modelLoad = async function () {
     };
 };
 
-// paramsObj 包含了此函数里需要的对象
-const init = async function () {
-    await imgLoad();
-    modelLoad();
+const init = function () {
+    // 图片加载
+    loadImages(imgsArr, () => {
+        // 加载完的处理
+        modelLoad();
+        window.model3dLoad();
+    });
 };
 
 init();
