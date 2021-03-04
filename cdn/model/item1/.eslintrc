@@ -1,0 +1,17 @@
+{
+    "env": {
+        "browser": true
+    },
+    "globals": {
+        "js": true
+    },
+    "rules": {
+        "no-var": 1,
+        "no-alert": 1,
+        "no-console": 1
+    },
+    "parserOptions": {
+        "ecmaVersion": 2020,
+        "sourceType": "module"
+    }
+}

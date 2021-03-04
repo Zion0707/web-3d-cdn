@@ -1,13 +1,13 @@
 {
-    "editor.formatOnSave": true,
     "editor.tabSize": 4,
-    //这里开启自动保存eslint格式
+    "editor.formatOnSave": true,
     "editor.codeActionsOnSave": {
         "source.fixAll.eslint": true
     },
     "files.exclude": {
-        "**/node_modules": true,
         "**/.git": true,
-        "**/.DS_Store": true
+        "**/yarn.lock": true,
+        "**/dist": true,
+        "**/node_modules": true
     }
 }
