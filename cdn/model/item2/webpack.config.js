@@ -19,4 +19,9 @@ module.exports = {
         path: path.resolve(__dirname, './src'),
         filename: 'index.min.js',
     },
+
+    // // 禁止 warning
+    // performance: {
+    //     hints: false,
+    // },
 };

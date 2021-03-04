@@ -2,32 +2,15 @@ import * as THREE from 'three';
 import TWEEN from '@tweenjs/tween.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
-import { conn } from '../../utils/index.js';
+import { conn, loadImages } from '../../utils/index.js';
 
 const cdnUrl = '/cdn/model/item1/src/';
 const img01 = cdnUrl + 'images/01.png';
 const imgPkq = cdnUrl + 'images/pkq.jpg';
 const objPkq = cdnUrl + 'models/pkq.obj';
-const imgsArr = [img01, imgPkq];
+const imgsArr = [img01, imgPkq, objPkq];
 
 conn();
-
-// 图片加载
-const imgLoad = async function () {
-    const pArr = [];
-    imgsArr.forEach((item) => {
-        const p = new Promise((reslove) => {
-            const img = new Image();
-            img.src = item;
-            img.onload = () => {
-                reslove(img);
-            };
-        });
-        pArr.push(p);
-    });
-    const res = await Promise.all(pArr);
-    return res;
-};
 
 //模型加载
 const modelLoad = async function () {
@@ -166,11 +149,13 @@ const modelLoad = async function () {
     };
 };
 
-// paramsObj 包含了此函数里需要的对象
-const init = async function () {
-    await imgLoad();
-    modelLoad();
-    window.model3dLoad();
+const init = function () {
+    // 图片加载
+    loadImages(imgsArr, () => {
+        // 加载完的处理
+        modelLoad();
+        window.model3dLoad();
+    });
 };
 
 init();
