@@ -2,13 +2,15 @@ import * as THREE from 'three';
 import TWEEN from '@tweenjs/tween.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader';
+import { conn } from '../../utils/index.js';
 
 const cdnUrl = '/cdn/model/item1/src/';
 const img01 = cdnUrl + 'images/01.png';
 const imgPkq = cdnUrl + 'images/pkq.jpg';
 const objPkq = cdnUrl + 'models/pkq.obj';
-
 const imgsArr = [img01, imgPkq];
+
+conn();
 
 // 图片加载
 const imgLoad = async function () {

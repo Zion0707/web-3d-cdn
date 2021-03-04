@@ -19,6 +19,4 @@ module.exports = {
         path: path.resolve(__dirname, './src'),
         filename: 'index.min.js',
     },
-
-    mode: 'production',
 };
